@@ -1,21 +1,15 @@
-import psycopg2
-import os
+from django.core.management.base import BaseCommand
+from django.db import connection
 
-try:
-    conn = psycopg2.connect(
-        dbname=os.getenv('DB_NAME'),
-        user=os.getenv('DB_USER'),
-        password=os.getenv('DB_PASSWORD'),
-        host=os.getenv('DB_HOST'),
-        port=os.getenv('DB_PORT')
-    )
-    cursor = conn.cursor()
-    cursor.execute('SELECT 1')
-    print('Connection successful')
-except Exception as e:
-    print(f'Error: {e}')
-finally:
-    if cursor:
-        cursor.close()
-    if conn:
-        conn.close()
+class Command(BaseCommand):
+    help = 'Test database connection and schema access'
+
+    def handle(self, *args, **kwargs):
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT 1')
+            self.stdout.write(self.style.SUCCESS('Database connection successful'))
+
+            cursor.execute(f'SET search_path TO portfolio')
+            cursor.execute('SELECT table_name FROM information_schema.tables WHERE table_schema = %s', ['portfolio'])
+            tables = cursor.fetchall()
+            self.stdout.write(self.style.SUCCESS(f'Tables in schema "portfolio": {tables}'))
