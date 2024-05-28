@@ -2,6 +2,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 from django.db import connection
+from django.db.backends.signals import connection_created
+from django.dispatch import receiver
 
 # Load environment variables from .env file if it exists
 env_path = Path('.') / '.env'
@@ -76,7 +78,8 @@ DATABASES = {
 }
 SCHEMA = 'portfolio'
 
-def set_search_path():
+@receiver(connection_created)
+def set_search_path(sender, connection, **kwargs):
     with connection.cursor() as cursor:
         cursor.execute(f'SET search_path TO {SCHEMA}')
 
