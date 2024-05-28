@@ -1,7 +1,8 @@
+# settings.py
+
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-from django.db import connection
 from django.db.backends.signals import connection_created
 from django.dispatch import receiver
 
