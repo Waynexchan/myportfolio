@@ -2693,3 +2693,32 @@ input[type=button]:disabled,
 }
 
 /*# sourceMappingURL=main.css.map */
+.skills-section {
+  margin-top: 2em;
+}
+
+.skills-section h3 {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.skill-box {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1em;
+  margin-bottom: 1em;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skill-box h4 {
+  margin-bottom: 0.5em;
+  color: #333;
+  font-weight: bold;
+}
+
+.skill-box p {
+  margin: 0;
+  color: #666;
+}
